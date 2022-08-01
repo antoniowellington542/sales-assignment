@@ -9,9 +9,9 @@ export default {
             type: 'string'
         },
         {
-            title: 'Admin',
-            name: 'admin',
-            type: 'boolean'
+            title: 'Role',
+            name: 'role',
+            type: 'string'
         },
     ]
 }
