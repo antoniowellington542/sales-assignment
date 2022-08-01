@@ -4,15 +4,14 @@
     "name": "sale-app"
   },
   "api": {
-    "projectId": "z7zz8jl6",
+    "projectId": "uwixm9uf",
     "dataset": "production"
   },
   "plugins": [
     "@sanity/base",
     "@sanity/default-layout",
     "@sanity/default-login",
-    "@sanity/desk-tool",
-    "@sanity/google-maps-input"
+    "@sanity/desk-tool"
   ],
   "env": {
     "development": {
