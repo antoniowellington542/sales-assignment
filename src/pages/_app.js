@@ -1,8 +1,10 @@
-import { AuthGoogleProvider } from '../src/contexts/authGoogle'
-import '../styles/globals.css'
+import { AuthGoogleProvider } from '../contexts/authGoogle';
+import '../../styles/globals.css'
 
 function MyApp({ Component, pageProps }) {
+  
   return (
+    
     <AuthGoogleProvider>
       <Component {...pageProps} />
     </AuthGoogleProvider>

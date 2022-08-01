@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AuthGoogleContext } from "../../src/contexts/authGoogle";
+import { AuthGoogleContext } from "../../contexts/authGoogle";
 
 const Dashboard = ()=>{
     const {logout} = useContext(AuthGoogleContext);

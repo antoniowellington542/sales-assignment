@@ -1,9 +1,7 @@
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { LoginBox, LoginButton, LoginContainer, LoginContent, LoginInput, LoginInputArea, LoginLogo, LoginText, LoginTitle } from "./styles";
 import { FcMoneyTransfer, FcGoogle } from 'react-icons/fc';
-import { app } from "../../services/firebaseconfig";
 import { useContext } from "react";
-import { AuthGoogleContext } from "../../src/contexts/authGoogle";
+import { AuthGoogleContext } from "../../contexts/authGoogle";
 const Login = () =>{
 
     const { signInGoogle } = useContext(AuthGoogleContext);
