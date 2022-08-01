@@ -19,7 +19,7 @@ const Login = () =>{
                     <LoginInputArea >
                         <label htmlFor="password">Password</label>
                         <LoginInput id="password" name="password" type="password" placeholder="Enter your Password" />
-                        <LoginText>forgot password?</LoginText>
+                        <LoginText href="#">forgot password?</LoginText>
                     </LoginInputArea>
                     <LoginButton href="#">Login</LoginButton>
                 </LoginContent>

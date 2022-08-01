@@ -66,7 +66,7 @@ export const LoginButton = styled.a`
     font-weight: 700;
 `
 
-export const LoginText = styled.span`
+export const LoginText = styled.a`
     margin-left: auto;
     font-size: 0.8em;
 `
