@@ -26,9 +26,10 @@ export const LoginLogo = styled.div`
 ` 
 
 export const LoginTitle = styled.h1`
-    font-size: 1em; 
+    font-size: 1.5em; 
     font-weight: 700; 
     padding-bottom: 4em;
+    color: black;
 `
 
 
@@ -56,14 +57,16 @@ export const LoginInput = styled.input`
     margin: 0.7em 0em;
 `
 
-export const LoginButton = styled.a`
-    background-color: #7FFFD4;
-    padding: 1em;
-    width: 21em;
+export const LoginButton = styled.button`
+    background-color: ${props => props.type == "login" ? "#7FFFD4" : "#FFFFFF"};
+    border: 1px solid #eee;
+    padding: 0.5em;
+    width: 10em;
     border-radius: 0.5em;
     text-align: center;
-    margin-top: 3em;
+    margin-top: 1em;
     font-weight: 700;
+    cursor: pointer;
 `
 
 export const LoginText = styled.a`

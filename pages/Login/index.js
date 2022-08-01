@@ -1,6 +1,12 @@
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { LoginBox, LoginButton, LoginContainer, LoginContent, LoginInput, LoginInputArea, LoginLogo, LoginText, LoginTitle } from "./styles";
-import { FcMoneyTransfer } from 'react-icons/fc';
+import { FcMoneyTransfer, FcGoogle } from 'react-icons/fc';
+import { app } from "../../services/firebaseconfig";
+import { useContext } from "react";
+import { AuthGoogleContext } from "../../src/contexts/authGoogle";
 const Login = () =>{
+
+    const { signInGoogle } = useContext(AuthGoogleContext);
     return(
         <LoginBox>
             <LoginContainer>
@@ -10,7 +16,7 @@ const Login = () =>{
                 </LoginLogo>
                 <LoginContent>
                     <LoginTitle>
-                        Log in
+                       Log in
                     </LoginTitle>
                     <LoginInputArea>
                         <label htmlFor="email">Email</label>
@@ -19,9 +25,15 @@ const Login = () =>{
                     <LoginInputArea >
                         <label htmlFor="password">Password</label>
                         <LoginInput id="password" name="password" type="password" placeholder="Enter your Password" />
-                        <LoginText href="#">forgot password?</LoginText>
+                        <LoginText href="/forgot-password">forgot password?</LoginText>
                     </LoginInputArea>
-                    <LoginButton href="#">Login</LoginButton>
+                    <div style={{
+                        display: "flex",
+                        justifyContent: "space-between"
+                    }}>
+                        <LoginButton type="login">Login</LoginButton>
+                        <LoginButton onClick={signInGoogle} ><FcGoogle size={20}/></LoginButton>
+                    </div>
                 </LoginContent>
             </LoginContainer>
         </LoginBox>
