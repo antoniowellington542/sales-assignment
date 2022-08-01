@@ -59,7 +59,7 @@ export const LoginInput = styled.input`
 
 export const LoginButton = styled.button`
     background-color: ${props => props.type == "login" ? "#7FFFD4" : "#FFFFFF"};
-    border: 1px solid #eee;
+    border: 2px solid #eee;
     padding: 0.5em;
     width: 10em;
     border-radius: 0.5em;
