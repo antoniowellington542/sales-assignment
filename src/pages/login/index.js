@@ -15,8 +15,8 @@ const Login = () =>{
                     <h2 className="text-xl  pl-2"><strong>SaleStore</strong></h2>
                 </div>
                 <div className="w-[65%] h-full flex flex-col items-center p-2 md:p-5">
-                    <h2 className="md:mt-24 text-gray-600"><strong>Sign in</strong></h2>
-                    <div className="flex flex-col md:mt-24 mb-1 ">
+                    <h2 className="md:mt-16 text-gray-600"><strong>Sign in</strong></h2>
+                    <div className="flex flex-col md:mt-16 mb-1 ">
                         <span><strong>Email</strong></span>
                         <input className="md:w-96 rounded border border-gray-500 p-2 my-1" placeholder='jose@gmail.com'/>
                     </div>

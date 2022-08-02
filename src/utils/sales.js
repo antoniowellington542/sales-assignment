@@ -1,7 +1,9 @@
 import { client } from "./client";
 const query = `*[_type == "sale"]{
     _id,
-    client_name
+    client_name,
+    product,
+    value
 }`;
 
 export const fetchData = async () =>{

@@ -20,25 +20,30 @@ const Sale = () => {
     return (
         <>
             <NavMenu/>
-            <div className="w-full p-5 relative pb-[2em] flex flex-col justify-center items-center">
-                <div className="w-3/4 flex justify-between">
-                    <Link href="create-sale">
-                        <span className="font-bold bg-green-400 p-2 rounded border border-gray-400 cursor-pointer">Create</span>
-                    </Link>
-                    <label className="flex border border-gray-500 rounded-xl bg-green-400">
+            <div className="w-full p-[2em] bg-blue-400 min-h-screen flex flex-col items-center">
+                <h1 className="text-5xl text-white pb-[1.5em]">Sales</h1>
+                <div className="md:w-3/4 border-b border-white pb-[1em] flex flex-col md:flex-row md:justify-between">
+                    <label className="h-8 flex border border-gray-500 rounded-xl bg-green-400">
                         <input id="search" name="search" className="pl-2 rounded-l-xl" type="text" placeholder="Search" />
                         <button>
                             <AiOutlineSearch className="h-full p-1 border-l border-gray-500 " size={36}/>
                         </button>
                     </label>
+                    <Link href="create-sale">
+                        <span className="font-bold bg-green-400 p-2 rounded border border-gray-400 cursor-pointer ml-auto mr-auto md:ml-0 md:mr-0 mt-8 md:mt-0">Create</span>
+                    </Link>
                 </div>
-                <div className="w-3/4 pt-[5em] grid grid-cols-4 gap-3">
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
+                <div className="w-3/4 pt-12 grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-8">
+                    {
+                        sales.map((sale)=> 
+                            <Card 
+                                key={sale._id}
+                                product={sale.product} 
+                                client_name={sale.client_name}
+                                value={sale.value}
+                            />
+                        )
+                    }
                 </div>
             </div>
         </>
