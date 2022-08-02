@@ -1,4 +1,5 @@
 import { client } from "./client";
+
 const query = `*[_type == "sale"]{
     _id,
     client_name,
