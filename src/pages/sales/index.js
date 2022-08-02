@@ -33,11 +33,12 @@ const Sale = () => {
                         <span className="font-bold bg-green-400 p-2 rounded border border-gray-400 cursor-pointer ml-auto mr-auto md:ml-0 md:mr-0 mt-8 md:mt-0">Create</span>
                     </Link>
                 </div>
-                <div className="w-3/4 pt-12 grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-8">
+                <div className="w-3/4 pt-12 min-h-screen grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-8">
                     {
                         sales.map((sale)=> 
                             <Card 
                                 key={sale._id}
+                                id={sale._id}
                                 product={sale.product} 
                                 client_name={sale.client_name}
                                 value={sale.value}
