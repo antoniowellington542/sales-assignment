@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { NavMenu } from "../../components/NavMenu";
 import { AuthGoogleContext } from "../../contexts/authGoogle";
 
 const Dashboard = ()=>{
@@ -6,6 +7,7 @@ const Dashboard = ()=>{
 
     return(
         <>
+            <NavMenu/>
             <h1>Dashboard</h1>
             <button onClick={logout}>logout</button>
         </>
@@ -13,4 +15,4 @@ const Dashboard = ()=>{
     )
 }
 
-export { Dashboard };
+export default Dashboard;

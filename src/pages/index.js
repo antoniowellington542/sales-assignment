@@ -1,9 +1,8 @@
-import { Login } from "./Login";
-import { Dashboard } from "./Dashboard";
+import { Login } from "./login";
 import { useContext } from "react";
 import { AuthGoogleContext } from "../contexts/authGoogle";
-import { Sale } from "./sale";
 import { NavMenu } from "../components/NavMenu";
+import { Dashboard } from "./dashboard";
 export default function Home() {
   const {signed} = useContext(AuthGoogleContext);
     
@@ -13,10 +12,7 @@ export default function Home() {
       )
   }else{
     return(
-    <>
-      <NavMenu/>
-      <Sale/>
-    </>
+    <Dashboard/>
     )
   }
 }

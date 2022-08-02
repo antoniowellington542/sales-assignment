@@ -12,23 +12,23 @@ const NavMenu = () =>{
                 </div>
                 <ul className="md:flex md:items-center">
                     <li className="mx-4">
-                        <Link href="/">
-                            <span className="text-xl hover:text-green-400 duration-500">HOME</span>
+                        <Link href="/dashboard">
+                            <span className="text-xl hover:text-green-400 duration-500 cursor-pointer">HOME</span>
                         </Link>
                     </li>
                     <li className="mx-4">
                         <Link href="/sales">
-                            <span className="text-xl hover:text-green-400 duration-500">SALES</span>
+                            <span className="text-xl hover:text-green-400 duration-500 cursor-pointer">SALES</span>
                         </Link>
                     </li>
                     <li className="mx-4">
-                        <Link href="/comission" className="text-xl hover:text-cyan-500 duration-500">COMISSION</Link>
+                        <Link href="/comission" className="text-xl hover:text-cyan-500 duration-500 cursor-pointer">COMISSION</Link>
                     </li>
                     <li className="mx-4">
-                        <Link href="/edit-sale" className="text-xl hover:text-cyan-500 duration-500">EDIT SALE</Link>
+                        <Link href="/edit-sale" className="text-xl hover:text-cyan-500 duration-500 cursor-pointer">EDIT SALE</Link>
                     </li>
                     <li className="mx-4">
-                        <Link href="/profile" className="text-xl hover:text-cyan-500 duration-500">PROFILE</Link>
+                        <Link href="/profile" className="text-xl hover:text-cyan-500 duration-500  cursor-pointer">PROFILE</Link>
                     </li>
                     
                    
