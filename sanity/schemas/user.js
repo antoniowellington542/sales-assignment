@@ -12,12 +12,16 @@ export default {
             title: 'Name',
             name: 'name',
             type: 'string',
-            required: true,
         },
         {
             title: 'Role',
             name: 'role',
             type: 'string',
         },
+        {
+            title:'Admin',
+            name: 'admin',
+            type: 'boolean'
+        }
     ]
 }
