@@ -28,9 +28,6 @@ const NavMenu = () =>{
                         <li className="mx-4 my-6 md:my-0 text-2xl md:text-xl hover:text-green-400 duration-500 cursor-pointer">
                             <Link href="/comission">COMISSION</Link>
                         </li>
-                        <li className="mx-4 my-6 md:my-0 text-2xl md:text-xl hover:text-green-400 duration-500 cursor-pointer">
-                            <Link href="/edit-sale">EDIT SALE</Link>
-                        </li>
                         <li className="mx-4 my-6 md:my-0 bg-green-400 p-3 rounded text-2xl md:text-xl font- hover:text-white duration-500  cursor-pointer">
                             <Link href="/profile">PROFILE</Link>
                         </li>
