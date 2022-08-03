@@ -5,7 +5,9 @@ const query = (id) =>{
         _id,
         client_name,
         product,
-        value
+        value,
+        status,
+        "sell": seller._ref ,
     }`;
 
     return r;

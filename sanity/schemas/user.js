@@ -9,9 +9,15 @@ export default {
             type: 'string'
         },
         {
+            title: 'Name',
+            name: 'name',
+            type: 'string',
+            required: true,
+        },
+        {
             title: 'Role',
             name: 'role',
-            type: 'string'
+            type: 'string',
         },
     ]
 }
