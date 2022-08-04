@@ -1,7 +1,7 @@
 import { client } from "./client";
 
 const query = (email) => {
-    const r = `*[_type=="user" && email==${email}]{
+    const r = `*[_type=="user" && email=="${email}"]{
         _id,
         name,           
     }`
@@ -11,11 +11,11 @@ const query = (email) => {
 export const fetchDataExistUser = async (email) =>{
     try{
         const user = await client.fetch(query(email));
-        if(user){
-            return true;
+        if(!user){
+            return false;
         }
 
-        return false;
+        return true;
 
     } catch(err){
         console.log(err);

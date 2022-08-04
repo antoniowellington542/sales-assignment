@@ -18,6 +18,9 @@ const SaleDetails = () => {
     const {id} = router.query;
 
     useEffect(()=>{
+        if(!signed){
+            router.push("/login");
+        }
         reqSale(id);
     },[id]);
 

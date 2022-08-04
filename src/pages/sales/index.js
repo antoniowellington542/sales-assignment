@@ -1,14 +1,17 @@
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Card from "../../components/Card";
 import { NavMenu } from "../../components/NavMenu";
 import { fetchData } from "../../utils/sales";
 import {AiOutlineSearch} from 'react-icons/ai';
+import { AuthGoogleContext } from "../../contexts/authGoogle";
+import { useRouter } from "next/router";
 
 const Sale = () => {
 
     const [sales, setSales] = useState([]);
-    
+    const { signed } = useContext(AuthGoogleContext);
+    const route = useRouter();
     useEffect(()=>{
         req();
     },[]);
@@ -17,7 +20,14 @@ const Sale = () => {
         setSales(await fetchData());
     }
 
-    return (
+    useEffect(()=>{
+        if(!signed){
+            route.push("/login");
+        }
+    },[]);
+    
+
+    return  (
         <>
             <NavMenu/>
             <div className="w-full p-[2em] bg-blue-400 min-h-screen flex flex-col items-center">
