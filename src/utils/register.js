@@ -10,6 +10,6 @@ export async function registerUser(mutations){
         body: JSON.stringify({mutations})
     })
         .then(response => response.json())
-        .then(result => console.log(result))
+        .then(result => console.log("ok"))
         .catch(error => console.error(error))
 };

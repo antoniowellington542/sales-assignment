@@ -1,11 +1,9 @@
-export const createUser = (name, email, role, password)=> {
+export const createUser = (name, role)=> {
     const mutations = [{
         createOrReplace: {
             _type: 'user',
             name: name,
             role: role,
-            email: email,
-            password: password,
             admin: false,
         }
     }]

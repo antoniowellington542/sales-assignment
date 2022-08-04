@@ -1,6 +1,5 @@
 import { AuthGoogleProvider } from '../contexts/authGoogle';
-import '../../styles/globals.css'
-import { IconContext } from 'react-icons';
+import '../../styles/globals.css';
 
 function MyApp({ Component, pageProps }) {
   

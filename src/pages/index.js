@@ -1,4 +1,4 @@
-import { Login } from "./login";
+import Login from "./login";
 import { useContext } from "react";
 import { AuthGoogleContext } from "../contexts/authGoogle";
 import { NavMenu } from "../components/NavMenu";
