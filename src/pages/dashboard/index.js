@@ -10,7 +10,7 @@ const Dashboard = ()=>{
 
     if(typeof window !== "undefined"){
         if(!signed){
-            router.replace("/login");
+            router.replace("/");
         }
     }
     const loading = true;
