@@ -14,16 +14,19 @@ const Dashboard = ()=>{
             router.replace("/");
         }
     }
-    return(
-        <>
-            <Suspense fallback={<Loading/>}>
-                <NavMenu/>
-                <h1>Dashboard</h1>
-                <button onClick={logout}>logout</button>
-            </Suspense>
-        </>
-            
-    )
+    
+    if(signed){
+        return(
+            <>
+                <Suspense fallback={<Loading/>}>
+                    <NavMenu/>
+                    <h1>Dashboard</h1>
+                    <button onClick={logout}>logout</button>
+                </Suspense>
+            </>
+                
+        )
+    }
     
 }
 

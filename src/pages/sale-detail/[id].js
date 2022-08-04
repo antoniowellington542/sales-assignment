@@ -10,6 +10,8 @@ import { ImUserTie } from 'react-icons/im';
 import { fetchDataUser } from '../../utils/user';
 import { redirectLoginPage } from '../../utils/redirectLoginPage';
 import { AuthGoogleContext } from '../../contexts/authGoogle';
+import { deleteSaleMutation } from '../../mutations/deleteSaleMutation';
+import { deleteSale } from '../../services/deleteSale';
 
 const NavMenu = lazy(() => import("../../components/NavMenu"));
 const Loading = lazy(() => import("../../components/Loading"));
@@ -34,50 +36,57 @@ const SaleDetails = () => {
         setSales(await fetchSaleDetails(saleId));
     }
 
+    const del = (saleId) => {
+        deleteSale(deleteSaleMutation(saleId))
+        router.replace("/sales");
+    }
+
     const reqUser = async (userId) =>{
         setUsers(await fetchDataUser(userId));
     }
-    return(
-        <>
-            <Suspense fallback={<Loading/>}>
-                <NavMenu/>
-                {sales.map((sale) => 
-                    <div key={sale._id} className='w-full h-[92.3vh] bg-blue-500 p-5 flex justify-center items-center'>
-                        <div className='flex flex-col md:flex-row w-[90%] md:w-2/4 h-[40em] border border-gray-500 bg-white shadow-2xl shadow-black rounded-xl'>
-                            <div className='p-4 md:p-0 md:w-2/5  flex flex-col justify-center items-center bg-green-400 rounded-t-xl md:rounded-l-xl'>
-                                <FaUser size={48}/>
-                                <h2 className='pt-4 text-xl font-medium'>{sale.client_name}</h2>
-                            </div>
-                            <div className='w-4/5 md:w-3/5 h-96 flex flex-col mt-auto mb-auto ml-auto mr-auto md:ml-0 md:mr-0'>
-                                <div className='w-full h-full grid grid-cols-2 gap-4'>
-                                    <div className='flex flex-col justify-center items-center'>
-                                        <ImUserTie size={40}/>
-                                        {users.map((user)=> user.name ? <p className='text-2xl font-light pt-2'>{user.name}</p>: <p className='text-2xl font-light pl-4 pt-2'>Not seller</p>)}
-                                    </div>
-                                    <div className='flex flex-col justify-center items-center'>
-                                        <RiMoneyDollarBoxFill size={40}/>
-                                        <p className='text-2xl font-light pt-2'>{sale.value} R$</p>
-                                    </div>
-                                    <div className='flex flex-col justify-center items-center'>
-                                        <BsBox size={40}/>
-                                        <p className='text-2xl font-light pt-2'>{sale.product}</p>
-                                    </div>
-                                    <div className='flex flex-col justify-center items-center'>
-                                        {sale.status == 'approved' ? <AiOutlineCheckCircle size={40} color={'green'}/> : <MdOutlineCancelPresentation size={40} color={'red'}/>}
-                                        <p className='text-2xl font-light pt-2'>{sale.status}</p>
-                                    </div>  
+    if(signed){
+        return(
+            <>
+                <Suspense fallback={<Loading/>}>
+                    <NavMenu/>
+                    {sales.map((sale) => 
+                        <div key={sale._id} className='w-full h-[92.3vh] bg-blue-500 p-5 flex justify-center items-center'>
+                            <div className='flex flex-col md:flex-row w-[90%] md:w-2/4 h-[40em] border border-gray-500 bg-white shadow-2xl shadow-black rounded-xl'>
+                                <div className='p-4 md:p-0 md:w-2/5  flex flex-col justify-center items-center bg-green-400 rounded-t-xl md:rounded-l-xl'>
+                                    <FaUser size={48}/>
+                                    <h2 className='pt-4 text-xl font-medium'>{sale.client_name}</h2>
                                 </div>
-                                <div className='flex justify-around'>
-                                    <button className='w-[5em] md:w-[10em] p-3 bg-yellow-500 rounded-xl text-xl font-bold'>Edit</button>
-                                    <button className='w-[5em] md:w-[10em] p-3 bg-yellow-500 rounded-xl text-xl font-bold'>Delete</button>  
+                                <div className='w-4/5 md:w-3/5 h-96 flex flex-col mt-auto mb-auto ml-auto mr-auto md:ml-0 md:mr-0'>
+                                    <div className='w-full h-full grid grid-cols-2 gap-4'>
+                                        <div className='flex flex-col justify-center items-center'>
+                                            <ImUserTie size={40}/>
+                                            {users.map((user)=> user.name ? <p className='text-2xl font-light pt-2'>{user.name}</p>: <p className='text-2xl font-light pl-4 pt-2'>Not seller</p>)}
+                                        </div>
+                                        <div className='flex flex-col justify-center items-center'>
+                                            <RiMoneyDollarBoxFill size={40}/>
+                                            <p className='text-2xl font-light pt-2'>{sale.value} R$</p>
+                                        </div>
+                                        <div className='flex flex-col justify-center items-center'>
+                                            <BsBox size={40}/>
+                                            <p className='text-2xl font-light pt-2'>{sale.product}</p>
+                                        </div>
+                                        <div className='flex flex-col justify-center items-center'>
+                                            {sale.status == 'approved' ? <AiOutlineCheckCircle size={40} color={'green'}/> : <MdOutlineCancelPresentation size={40} color={'red'}/>}
+                                            <p className='text-2xl font-light pt-2'>{sale.status}</p>
+                                        </div>  
+                                    </div>
+                                    <div className='flex justify-around'>
+                                        <button className='w-[5em] md:w-[10em] p-3 bg-yellow-500 rounded-xl text-xl font-bold'>Edit</button>
+                                        <button className='w-[5em] md:w-[10em] p-3 bg-yellow-500 rounded-xl text-xl font-bold' onClick={() => del(sale._id)}>Delete</button>  
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                )}
-            </Suspense>
-        </>
-    )
+                    )}
+                </Suspense>
+            </>
+        )
+    }
 }
 
 export default SaleDetails;
