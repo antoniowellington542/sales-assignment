@@ -4,6 +4,11 @@ export default {
     title: 'User',
     fields: [
         {
+            title: 'AuthUseId',
+            name: 'authUserId',
+            type: 'string',
+        },
+        {
             title: 'Name',
             name: 'name',
             type: 'string',

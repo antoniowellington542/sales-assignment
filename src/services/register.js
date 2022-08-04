@@ -1,4 +1,4 @@
-import config from "./config";
+import config from "../utils/config";
 
 export async function registerUser(mutations){
     return await fetch(`https://${config.projectId}.api.sanity.io/v2021-06-07/data/mutate/${config.dataset}`, {

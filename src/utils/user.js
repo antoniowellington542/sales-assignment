@@ -10,8 +10,8 @@ const query = (id) => {
 
 export const fetchDataUser = async (id) =>{
     try{
-        const sale = await client.fetch(query(id));
-        return sale;
+        const user = await client.fetch(query(id));
+        return user;
 
     } catch(err){
         console.log(err);
