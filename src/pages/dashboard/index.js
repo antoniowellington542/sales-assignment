@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
+import Loading from "../../components/Loading";
 import { NavMenu } from "../../components/NavMenu";
 import { AuthGoogleContext } from "../../contexts/authGoogle";
 
@@ -12,14 +13,17 @@ const Dashboard = ()=>{
             router.replace("/login");
         }
     }
-    
-
+    const loading = true;
     return(
-            <>
-                <NavMenu/>
-                <h1>Dashboard</h1>
-                <button onClick={logout}>logout</button>
-            </>
+        <>
+             {!loading ? ( 
+                <div>
+                    <NavMenu/>
+                    <h1>Dashboard</h1>
+                    <button onClick={logout}>logout</button>
+                </div>
+                ) : <Loading />}
+        </>
             
     )
     

@@ -49,6 +49,7 @@ const AuthGoogleProvider = ({children}) => {
                 if(r){
                     localStorage.setItem("@AuthFirebase:token", token);
                     localStorage.setItem("@AuthFirebase:user", JSON.stringify(user));
+                    Router.push('/dashboard');
                 }
             // ...
             }).catch((error) => {

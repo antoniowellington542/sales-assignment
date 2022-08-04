@@ -37,8 +37,9 @@ const Register = () => {
 
     }
 
-    const onSubmit = data => {
-        const userExists = req(data);
+    const onSubmit = async (data) => {
+        const userExists = await req(data);
+        console.log(userExists);
         if(!userExists){
             const r = registerUser(createUser(data));
             if(r){
@@ -77,7 +78,7 @@ const Register = () => {
                             <button
                                 className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                 type="button"
-                                onClick={() => setShowModal(false)}
+                                onClick={() => {setShowModal(false);Router.push("/")}}
                              >
                                 Ir para Login
                             </button>
