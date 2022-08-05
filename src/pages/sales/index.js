@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { useContext, useEffect, useState, Suspense, lazy } from "react";
 import Card from "../../components/Card";
-import { fetchData } from "../../utils/sales";
+import { fetchDataSales } from "../../utils/sales";
 import {AiOutlineSearch} from 'react-icons/ai';
 import { AuthGoogleContext } from "../../contexts/authGoogle";
 import { useRouter } from "next/router";
+import { fetchDataExistUser } from "../../utils/verifyExistsUser";
+import { jsonEval } from "@firebase/util";
 
 const  NavMenu = lazy(() => import("../../components/NavMenu"));
 const Loading = lazy(() => import("../../components/Loading"));
@@ -14,12 +16,21 @@ const Sale = () => {
     const [sales, setSales] = useState([]);
     const { signed } = useContext(AuthGoogleContext);
     const router = useRouter();
+
     useEffect(()=>{
         req();
     },[]);
 
+    const reqUser = async (email) => {
+        return await fetchDataExistUser(email);
+    }  
+
     const req = async () => {
-        setSales(await fetchData());
+        const localUser = jsonEval(localStorage.getItem("@AuthFirebase:user"));
+        const email = localUser.email
+        const user = await reqUser(email);
+        const id = user[0]._id;
+        setSales(await fetchDataSales(id));
     }
 
     if(typeof window !== "undefined"){
