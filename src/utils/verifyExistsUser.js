@@ -11,12 +11,13 @@ const query = (email) => {
 export const fetchDataExistUser = async (email) =>{
     try{
         const user = await client.fetch(query(email));
-        console.log(user.length);
-        if(user.length == 0){
-            return false;
-        }
+        return user;
+        // console.log(user.length);
+        // if(user.length == 0){
+        //     return false;
+        // }
 
-        return true;
+        // return true;
 
     } catch(err){
         console.log(err);

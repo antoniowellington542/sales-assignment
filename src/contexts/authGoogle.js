@@ -17,6 +17,7 @@ const AuthGoogleProvider = ({children}) => {
     const verifyExistsUser = async (email) => {
         return await fetchDataExistUser(email);
     }   
+
     useEffect(() => {
         const loadStoreAuth = () =>{
             const localToken = localStorage.getItem("@AuthFirebase:token");
@@ -25,14 +26,13 @@ const AuthGoogleProvider = ({children}) => {
             if(localToken && localUser){
                 setUser(localUser);
             }
-
-
         }
         loadStoreAuth()
     }, []);
 
     const logout = ()=>{
         localStorage.clear();
+        Router.push("/login");
     }
 
     const signInGoogle = () => {

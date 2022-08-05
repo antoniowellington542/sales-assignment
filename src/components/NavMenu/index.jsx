@@ -3,8 +3,11 @@ import { FcMoneyTransfer } from 'react-icons/fc';
 import { VscMenu } from "react-icons/vsc";
 import { AiOutlineClose } from "react-icons/ai";
 import { useState } from 'react';
+import { useContext } from 'react';
+import { AuthGoogleContext } from '../../contexts/authGoogle';
 const NavMenu = () =>{
     const [open, setOpen] = useState(false);
+    const {logout} = useContext(AuthGoogleContext);
     
     return(
         <div>
@@ -28,8 +31,11 @@ const NavMenu = () =>{
                         <li className="mx-4 my-6 md:my-0 text-2xl md:text-xl hover:text-green-400 duration-500 cursor-pointer">
                             <Link href="/comission">COMISSION</Link>
                         </li>
-                        <li className="mx-4 my-6 md:my-0 bg-green-400 p-3 rounded text-2xl md:text-xl font- hover:text-white duration-500  cursor-pointer">
+                        <li className="mx-4 my-6 md:my-0 bg-green-400 p-2 rounded text-2xl md:text-xl font- hover:text-white duration-500  cursor-pointer">
                             <Link href="/profile">PROFILE</Link>
+                        </li>
+                        <li className="mx-4 my-6 md:my-0 bg-red-400 p-2 rounded text-2xl md:text-xl font- hover:text-white duration-500  cursor-pointer">
+                            <button onClick={logout}>LOGOUT</button>
                         </li>
                     </ul>
             </nav>

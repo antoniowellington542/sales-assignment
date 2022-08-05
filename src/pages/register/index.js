@@ -24,33 +24,31 @@ const Register = () => {
     const registerGoogle =  async () => {
         const data = await registerInGoogle();
         const userExists =  await req(data);
-        if(!userExists){
-            const r = registerUser(createUser(data));
-            if(r){
-                setShowModal(true);
+        if(userExists.length == 0){
+            const result = registerUser(createUser(data));
+            if(result){
                 setSucess(true);
             }
         }else{
-            setShowModal(true);
             setSucess(false);
         }
+
+        setShowModal(true);
 
     }
 
     const onSubmit = async (data) => {
         const userExists = await req(data);
-        console.log(userExists);
+        // console.log(userExists);
         if(!userExists){
             const r = registerUser(createUser(data));
             if(r){
-                setShowModal(true);
                 setSucess(true);
             }
         }else{
-            setShowModal(true);
             setSucess(false);
         }
-
+        setShowModal(true);
     };
     
     return (
@@ -75,13 +73,15 @@ const Register = () => {
                     <div className="flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b">
                       {sucess ? 
                         (
-                            <button
-                                className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                type="button"
-                                onClick={() => {setShowModal(false);Router.push("/")}}
-                             >
-                                Ir para Login
-                            </button>
+                            <Link href="/login" >
+                                <button
+                                    className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                    type="button"
+                                    onClick={() => {setShowModal(false);}}
+                                >
+                                    Ir para Login
+                                </button>
+                            </Link>
                         ) : 
                         (<Link href="/register" >
                             <button
@@ -100,24 +100,7 @@ const Register = () => {
             </>
           ) : null}
             <div className="min-w-screen min-h-screen bg-gray-900 flex items-center justify-center px-5 py-5">
-                <div id="popup-modal" tabIndex="-1" className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
-                    <div className="relative p-4 w-full max-w-md h-full md:h-auto">
-                        <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                            <button type="button" className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="popup-modal">
-                                <svg height="auto" aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
-                                <span className="sr-only">Close modal</span>
-                            </button>
-                            <div className="p-6 text-center">
-                                <svg height="auto" aria-hidden="true" className="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to delete this product?</h3>
-                                <button data-modal-toggle="popup-modal" type="button" className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
-                                    Yes, I m sure
-                                </button>
-                                <button data-modal-toggle="popup-modal" type="button" className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No, cancel</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style={{maxWidth:'1000px'}}>
                         <div className="md:flex w-full">
@@ -137,7 +120,7 @@ const Register = () => {
                                                 <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
                                                 <input {...register("name", { required: true})} type="text" className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="John"/>
                                             </div>
-                                            {errors.nameRequired && (<div className="flex pt-2"><AiOutlineWarning size={24} color="red"/><p className="pl-2">This field is required</p></div>)}
+                                            {errors.name && (<div className="flex pt-2"><AiOutlineWarning size={24} color="red"/><p className="pl-2">This field is required</p></div>)}
                                         </div>
                                         <div className="w-1/2 px-3 mb-5">
                                             <label htmlFor="" className="text-xs font-semibold px-1">Role</label>
@@ -145,7 +128,7 @@ const Register = () => {
                                                 <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
                                                 <input {...register("role", { required: true})} type="text" className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="Role"/>
                                             </div>
-                                            {errors.roleRequired && (<div className="flex pt-2"><AiOutlineWarning size={24} color="red"/><p className="pl-2">This field is required</p></div>)}
+                                            {errors.role && (<div className="flex pt-2"><AiOutlineWarning size={24} color="red"/><p className="pl-2">This field is required</p></div>)}
                                         </div>
                                     </div>
                                     <div className="flex -mx-3">
@@ -155,7 +138,7 @@ const Register = () => {
                                                 <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-email-outline text-gray-400 text-lg"></i></div>
                                                 <input {...register("email", { required: true})} type="email" className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"  placeholder="johnsmith@example.com"/>
                                             </div>
-                                            {errors.emailRequired && (<div className="flex pt-2"><AiOutlineWarning size={24} color="red"/><p className="pl-2">This field is required</p></div>)}
+                                            {errors.email && (<div className="flex pt-2"><AiOutlineWarning size={24} color="red"/><p className="pl-2">This field is required</p></div>)}
                                         </div>
                                     </div>
                                     <div className="flex -mx-3">
@@ -165,7 +148,7 @@ const Register = () => {
                                                 <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
                                                 <input  {...register("password", { required: true})} type="password" className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="************"/>
                                             </div>
-                                            {errors.passwordRequired && (<div className="flex pt-2"><AiOutlineWarning size={24} color="red"/><p className="pl-2">This field is required</p></div>)}
+                                            {errors.password && (<div className="flex pt-2"><AiOutlineWarning size={24} color="red"/><p className="pl-2">This field is required</p></div>)}
                                         </div>
                                     </div>
                                     <div className="flex -mx-3">
