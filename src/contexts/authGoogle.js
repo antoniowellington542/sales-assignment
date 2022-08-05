@@ -43,10 +43,10 @@ const AuthGoogleProvider = ({children}) => {
                 setToken(credential.accessToken);
                 // The signed-in user info.
                 const user = result.user;
-                setUser(user);
                 const r = await verifyExistsUser(user.email);
                 console.log(r);
-                if(r){
+                if(r.length != 0){
+                    setUser(user);
                     localStorage.setItem("@AuthFirebase:token", token);
                     localStorage.setItem("@AuthFirebase:user", JSON.stringify(user));
                     Router.push('/dashboard');

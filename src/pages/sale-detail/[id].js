@@ -12,6 +12,7 @@ import { redirectLoginPage } from '../../utils/redirectLoginPage';
 import { AuthGoogleContext } from '../../contexts/authGoogle';
 import { deleteSaleMutation } from '../../mutations/deleteSaleMutation';
 import { deleteSale } from '../../services/deleteSale';
+import { deleteDataSale } from '../../utils/deleteSale';
 
 const NavMenu = lazy(() => import("../../components/NavMenu"));
 const Loading = lazy(() => import("../../components/Loading"));
@@ -37,7 +38,7 @@ const SaleDetails = () => {
     }
 
     const del = (saleId) => {
-        deleteSale(deleteSaleMutation(saleId))
+        deleteDataSale(saleId);
         router.replace("/sales");
     }
 

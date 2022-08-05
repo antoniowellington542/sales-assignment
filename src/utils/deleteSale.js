@@ -5,10 +5,9 @@ const query = (id) => {
     return r;
 }
 
-export const fetchDataSale = async (id) =>{
-    try{
-        await client.delete({query: `*[_type=="sale" && _id=="${id}"]`});
-    } catch(err){
-        console.log(err);
-    }
+export const deleteDataSale = async (id) =>{
+        await client
+            .delete({query: `*[_type=="sale" && _id=="${id}"]`})
+            .then(console.log)
+            .catch(console.log)
 };
