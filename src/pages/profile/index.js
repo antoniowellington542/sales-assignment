@@ -27,7 +27,7 @@ const Profile = () => {
                             <div class="grid grid-cols-1 md:grid-cols-2 text-center order-last md:order-first mt-20 md:mt-0">
                                 <div>
                                     <p class="font-bold text-gray-700 text-xl">Role</p>
-                                    <p class="text-gray-400">Seller</p>
+                                    <p class="text-gray-400">{localStorage.getItem("@AuthFirebase:role")}</p>
                                 </div>
                                 <div>
                                     <p class="font-bold text-gray-700 text-xl">Email</p>

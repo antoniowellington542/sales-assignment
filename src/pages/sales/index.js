@@ -6,6 +6,7 @@ import { AuthGoogleContext } from "../../contexts/authGoogle";
 import { useRouter } from "next/router";
 import { listSales } from "../../utils/listSales";
 import { redirectLoginPage } from "../../utils/redirectLoginPage";
+import { listAllSales } from "../../utils/listAllSales";
 
 const  NavMenu = lazy(() => import("../../components/NavMenu"));
 const Loading = lazy(() => import("../../components/Loading"));
@@ -14,15 +15,30 @@ const Sale = () => {
 
     const [sales, setSales] = useState([]);
     const { signed } = useContext(AuthGoogleContext);
+    const role = localStorage.getItem("@AuthFirebase:role");
     const router = useRouter();
     
-    useEffect(()=>{
-        redirectLoginPage(window, signed, router);
-        const req = async () =>{
-            setSales(await listSales());
-        }
-        req();
-    },[]);
+
+    if(role != "noRole"){
+        useEffect(()=>{
+            
+            redirectLoginPage(window, signed, router);
+    
+            if(role == "admin"){
+                const req = async () =>{
+                    setSales(await listAllSales());
+                }
+                req();
+            }else{
+                const req = async () =>{
+                    setSales(await listSales());
+                }
+                req();
+            }  
+            console.log(sales);
+        },[]);
+    }
+    
     
     if(signed){
         return  (
@@ -39,22 +55,24 @@ const Sale = () => {
                                 </button>
                             </label>
                             <Link href="create-sale">
-                                <span className="font-bold bg-green-400 p-2 rounded border border-gray-400 cursor-pointer ml-auto mr-auto md:ml-0 md:mr-0 mt-8 md:mt-0">Create</span>
+                                <button className={`font-bold ${role == "noRole" || role == "admin" ? "bg-gray-400 cursor-not-allowed" : "bg-green-400 cursor-pointer"} p-2 rounded border border-gray-400 ml-auto mr-auto md:ml-0 md:mr-0 mt-8 md:mt-0`} disabled={role == "noRole" || role == "admin" ? true : false}>Create</button>
                             </Link>
                         </div>
-                        <div className="w-3/4 pt-12 h-[5em] grid md:grid-cols-5 gap-8 md:gap-8 justify-center items-center">
-                            {
-                                sales.map((sale)=> 
-                                    <Card 
-                                        key={sale._id}
-                                        id={sale._id}
-                                        product={sale.product} 
-                                        client_name={sale.client_name}
-                                        value={sale.value}
-                                    />
-                                )
-                            }
-                        </div>
+                        {role == "noRole" ? <p className="text-white font-bold text-2xl text-center pt-4">To create or view sales edit your role in profile option</p>:
+                            <div className="w-3/4 pt-12 h-[5em] grid md:grid-cols-5 gap-8 md:gap-8 justify-center items-center">
+                                {
+                                    sales.map((sale)=> 
+                                        <Card 
+                                            key={sale._id}
+                                            id={sale._id}
+                                            product={sale.product} 
+                                            client_name={sale.client_name}
+                                            value={sale.value}
+                                        />
+                                    )
+                                }
+                            </div>
+                        }
                     </div>
                 </Suspense>
             </>

@@ -12,6 +12,7 @@ import { findSale } from '../../utils/findSale';
 import { findUser } from '../../utils/findUser';
 import { deleteSale } from '../../utils/deleteSale';
 import { jsonEval } from '@firebase/util';
+import { approvedSale } from '../../utils/aprovedSale';
 
 const NavMenu = lazy(() => import("../../components/NavMenu"));
 const Loading = lazy(() => import("../../components/Loading"));
@@ -20,13 +21,14 @@ const SaleDetails = () => {
 
     const [users, setUsers] = useState([]);
     const [sales, setSales] = useState([]);
-    
+    const [role, setRole] = useState();
     const router = useRouter();
     const { id } = router.query;
     
     const {signed} = useContext(AuthGoogleContext);
 
     useEffect(()=>{
+        setRole(localStorage.getItem("@AuthFirebase:role"));
         redirectLoginPage(window, signed, router);
         const req = async () =>{
             setSales(await findSale(id));
@@ -54,7 +56,7 @@ const SaleDetails = () => {
                                     <h2 className='pt-0 text-xl font-bold'>Cliente</h2>
                                     <span className='pt-4 text-4xl font-light'>{sale.client_name}</span>
                                 </div>
-                                <div className='w-4/5 md:w-3/5 h-96 flex flex-col mt-auto mb-auto ml-auto mr-auto md:ml-0 md:mr-0'>
+                                <div className='w-4/5 md:w-3/5 h-96 flex flex-col mt-auto mb-auto ml-auto mr-auto md:ml-0 md:mr-3'>
                                     <div className='w-full h-full grid grid-cols-2 gap-4'>
                                         <div className='flex flex-col justify-center items-center'>
                                             <ImUserTie size={40}/>
@@ -78,8 +80,17 @@ const SaleDetails = () => {
                                         </div>  
                                     </div>
                                     <div className='flex justify-around'>
-                                        <button className='w-[5em] md:w-[10em] p-3 bg-yellow-500 rounded-xl text-xl font-bold' onClick={()=>router.push(`/edit-sale/${id}`)}>Edit</button>
-                                        <button className='w-[5em] md:w-[10em] p-3 bg-yellow-500 rounded-xl text-xl font-bold' onClick={() => deleteSale(sale._id)}>Delete</button>  
+                                        {role == "admin" ? 
+                                            (
+                                                <button className={`w-[5em] md:w-[10em] mt-3 p-3 ${sale.status ? "bg-gray-500 cursor-not-allowed" : "bg-green-500 cursor-pointer"} rounded-xl text-white uppercase text-xl font-bold`} disabled={sale.status ? true: false} onClick={()=> approvedSale(sale._id, sale.date)}>To approve</button>
+                                            ):
+                                            (
+                                                <>
+                                                    <button className='w-[5em] md:w-[10em] p-3 bg-yellow-500 rounded-xl text-xl font-bold' onClick={()=>router.push(`/edit-sale/${id}`)}>Edit</button>
+                                                    <button className='w-[5em] md:w-[10em] p-3 bg-yellow-500 rounded-xl text-xl font-bold' onClick={() => deleteSale(sale._id)}>Delete</button>
+                                                </>
+                                            ) 
+                                        }
                                     </div>
                                 </div>
                             </div>

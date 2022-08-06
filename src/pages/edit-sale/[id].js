@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form"
 import { AiOutlineWarning } from "react-icons/ai";
 import Router, { useRouter } from 'next/router';
 import { findSale } from "../../utils/findSale";
 import { useEffect } from "react";
 import { updateSale } from "../../utils/updateSale";
+import { AuthGoogleContext } from "../../contexts/authGoogle";
 
 const EditSale = () => {
 
@@ -13,12 +14,20 @@ const EditSale = () => {
     const [showModal, setShowModal] = useState(false);
     const [sucess, setSucess] = useState(false);
     const [sales, setSales] = useState([]);
-    
+    const {signed} = useContext(AuthGoogleContext);
+    const role = localStorage.getItem("@AuthFirebase:role");
     const router = useRouter();
 
     const { id } = router.query;
 
     useEffect(()=>{
+
+        if(window !== "undefined"){
+            if(role == 'admin' || !signed){
+                router.replace("/dashboard");
+            }
+        }
+
         const req = async () =>{
             setSales(await findSale(id));
         }

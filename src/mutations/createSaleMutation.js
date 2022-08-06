@@ -1,6 +1,6 @@
 import Moment from 'moment';
 
-export const createSaleMutation = ({client_name, product, value, _id})=> {
+export const createSaleMutation = (client_name, product, value, _id)=> {
     const query = {
         _type: 'sale',
         client_name: client_name,

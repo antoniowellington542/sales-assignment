@@ -10,7 +10,7 @@ import { updateUser } from "../../utils/updateUser";
 
 const EditProfile = () => {
 
-    const { register, handleSubmit, formState: { errors }, getValues} = useForm();
+    const { register, handleSubmit, getValues} = useForm();
     const [showModal, setShowModal] = useState(false);
     const [sucess, setSucess] = useState(false);
     const [users, setUsers] = useState([]);
@@ -26,19 +26,22 @@ const EditProfile = () => {
 
     const onSubmit = async (data) => {
         
-        const dataUser = [];
-        const name = !data.name ? users[0].name : data.name;
-        const role = !data.role ? users[0].role : data.role;
+        if(data.name != "" || data.role != "") {
+            const dataUser = [];
         
-        Object.assign(dataUser, {
-            name,
-            role,
-            _id: users[0]._id
-        })
+            const name = !data.name ? users[0].name : data.name;
+            const role = !data.role ? users[0].role : data.role;
+            
+            Object.assign(dataUser, {
+                name,
+                role,
+                _id: users[0]._id
+            })
 
-        const result = await updateUser(dataUser);
-        result ? setSucess(true) : setSucess(false);
-        setShowModal(true);
+            const result = await updateUser(dataUser);
+            result ? setSucess(true) : setSucess(false);
+            setShowModal(true);
+        }
 
     };
 
@@ -59,7 +62,7 @@ const EditProfile = () => {
                     </div>
                     <div className="relative p-6 flex-auto">
                     <p className="my-4 text-slate-500 text-lg leading-relaxed">
-                        {sucess ? "Congratulations! Your profile is Edited!" : "Error!"}
+                        {sucess ? "Congratulations! Your profile is Edited!" : "Error!At least one field must be filled or server is down!"}
                     </p>
                     </div>
                     <div className="flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b">
@@ -113,10 +116,11 @@ const EditProfile = () => {
                                                 <input {...register("role")} type="text"  className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" placeholder={user.role}/>
                                             </div>
                                         </div>
+                                        
                                         <div className="pt-4 flex items-center space-x-4">
                                             <Link href="/profile">
                                                 <button className="flex justify-center items-center w-full text-gray-900 px-4 py-3 rounded-md focus:outline-none">
-                                                    <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg> Cancel
+                                                    <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg> Cancel
                                                 </button>
                                             </Link>
                                             <button className="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none">Confirm</button>

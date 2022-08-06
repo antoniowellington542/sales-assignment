@@ -10,7 +10,10 @@ export async function updateUser(data){
                                 role,
                             })
                             .commit()
-                            .then(console.log("sucess"))
+                            .then(()=>{
+                                localStorage.setItem("@AuthFirebase:role", role);
+                                return true;
+                            })
                             .catch((err)=>{
                                 console.error("Update failed: ", err.message)
                             })
