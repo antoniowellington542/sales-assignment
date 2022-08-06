@@ -35,10 +35,6 @@ const SaleDetails = () => {
         reqUser();
     },[]);
 
-    // const reqSale = async (id) => {
-    //     setSales(await findSale(id));
-    // }
-
     const reqUser = async() => {
         const localUser = jsonEval(localStorage.getItem("@AuthFirebase:user"));
         const email = localUser.email
@@ -77,7 +73,7 @@ const SaleDetails = () => {
                                         </div>  
                                     </div>
                                     <div className='flex justify-around'>
-                                        <button className='w-[5em] md:w-[10em] p-3 bg-yellow-500 rounded-xl text-xl font-bold'>Edit</button>
+                                        <button className='w-[5em] md:w-[10em] p-3 bg-yellow-500 rounded-xl text-xl font-bold' onClick={()=>router.push(`/edit-sale/${id}`)}>Edit</button>
                                         <button className='w-[5em] md:w-[10em] p-3 bg-yellow-500 rounded-xl text-xl font-bold' onClick={() => deleteSale(sale._id)}>Delete</button>  
                                     </div>
                                 </div>

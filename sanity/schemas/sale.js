@@ -13,7 +13,7 @@ export default {
             title: 'Seller',
             name: 'seller',
             type: 'reference',
-            to: [{type: 'user'}],
+            to: [{type: 'user'} || {type:'userFirebase'}],
             validation: Rule => Rule.required()
         },
         {

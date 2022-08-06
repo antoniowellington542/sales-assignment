@@ -18,15 +18,16 @@ const CreateSale = () => {
         const email = localUser.email
         const user = await findUser(email);
         const dataSale = [];
+        console.log(user);
 
         Object.assign(dataSale, {
             client_name: data.clientName,
             product: data.product,
             value: parseInt(data.value),
             _id: user[0]._id
-        })
+        });
 
-        const result = createSale(dataSale);
+        const result = await createSale(dataSale);
         result ? setSucess(true) : setSucess(false);
         setShowModal(true);
 
@@ -112,7 +113,7 @@ const CreateSale = () => {
                                         <button className="flex justify-center items-center w-full text-gray-900 px-4 py-3 rounded-md focus:outline-none" onClick={()=>Router.replace('/sales')}>
                                             <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg> Cancel
                                         </button>
-                                        <button className="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none">Create</button>
+                                        <button className="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none">Confirm</button>
                                     </div>
                                 </div>
                             </div>

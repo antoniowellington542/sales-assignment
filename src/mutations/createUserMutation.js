@@ -1,12 +1,12 @@
-export const createUserMutation = (data)=> {
+export const createUserMutation = (authUserId, name, email, role, password)=> {
 
     const query = {
         _type: 'user',
-        name: data.name,
-        role: data.role,
-        email: data.email,
-        password: data.password,
-        admin: false
+        authUserId: authUserId,
+        name: name,
+        role: role,
+        email: email,
+        password: password,
     }
 
 

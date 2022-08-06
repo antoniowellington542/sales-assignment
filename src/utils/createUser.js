@@ -1,16 +1,17 @@
-import { createUser, createUserMutation } from "../mutations/createUserMutation";
+import { createUserMutation } from '../mutations/createUserMutation';
 import { client } from "./client";
 import { findUser } from "./findUser";
 
 export const createUser = async (data) => {
-    const userExists = await client.fetch(findUser(data.email))
-                             .then(console.log("ok"))
-                             .catch(console.error)
+    
+    const {authUserId, name, role, email, password} = data;
+    
+    const userExists = await findUser(email);
 
     const result = 
     (   userExists.length == 0 ? 
             await client
-                .create(createUserMutation(data))
+                .create(createUserMutation(authUserId, name, email, role, password))
                 .then(()=>{return true})
                 .catch(console.error) 
         : false

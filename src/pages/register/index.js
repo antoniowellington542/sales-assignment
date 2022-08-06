@@ -1,11 +1,11 @@
-import { createUser } from "../../mutations/createUserMutation";
 import { useForm } from "react-hook-form";
 import { AiOutlineWarning } from 'react-icons/ai';
 import { useState } from "react";
 import Link from "next/link";
 import Router from "next/router";
 import { FcGoogle } from "react-icons/fc";
-import { createUserFirebase } from "../../utils/createUserFirebase";
+import { registerInGoogle } from "../../utils/registerGoogle";
+import { createUser } from "../../utils/createUser";
 
 const Register = () => {
 
@@ -14,7 +14,19 @@ const Register = () => {
     const [sucess, setSucess] = useState(false);
 
     const registerGoogle =  async () => {
-        const result = await createUserFirebase();
+        const data = await registerInGoogle();
+        const dataUser = [];
+
+        Object.assign(dataUser, {
+            authUserId: data.uid,
+            name: data.displayName,
+            role: "noRole",
+            email: data.email,
+            password: 'noPassword'
+        });
+
+        console.log(dataUser);
+        const result = await createUser(dataUser);
         if(result){
             setSucess(true);
         }
@@ -23,7 +35,18 @@ const Register = () => {
     }
 
     const onSubmit = async (data) => {
-        const result = await createUser(data);
+        const dataUser = [];
+
+        Object.assign(dataUser, {
+            authUserId: "noAuthUserId",
+            name: data.name,
+            role: data.role,
+            email: data.email,
+            password: data.password
+        });
+
+        // console.log(dataUser);
+        const result = await createUser(dataUser);
         if(result){
             setSucess(true);
         }

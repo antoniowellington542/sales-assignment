@@ -4,6 +4,11 @@ export default {
     title: 'User',
     fields: [
         {
+            title: 'AuthUseId',
+            name: 'authUserId',
+            type: 'string',
+        },
+        {
             title: 'Name',
             name: 'name',
             type: 'string',
@@ -25,12 +30,6 @@ export default {
             title: 'Role',
             name: 'role',
             type: 'string',
-            validation: Rule => Rule.required()
         },
-        {
-            title:'Admin',
-            name: 'admin',
-            type: 'boolean'
-        }
     ]
 }
