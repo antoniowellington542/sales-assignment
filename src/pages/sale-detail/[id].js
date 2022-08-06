@@ -1,18 +1,17 @@
 import { useState, useEffect, Suspense, lazy, useContext} from 'react';
 import { useRouter } from 'next/router';
-import { fetchSaleDetails } from '../../utils/saleDetails';
 import { RiMoneyDollarBoxFill } from 'react-icons/ri';
 import { FaUser } from 'react-icons/fa';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { MdOutlineCancelPresentation } from 'react-icons/md';
 import { BsBox } from 'react-icons/bs';
 import { ImUserTie } from 'react-icons/im';
-import { fetchDataUser } from '../../utils/user';
 import { redirectLoginPage } from '../../utils/redirectLoginPage';
 import { AuthGoogleContext } from '../../contexts/authGoogle';
-import { deleteSaleMutation } from '../../mutations/deleteSaleMutation';
-import { deleteSale } from '../../services/deleteSale';
-import { deleteDataSale } from '../../utils/deleteSale';
+import { findSale } from '../../utils/findSale';
+import { findUser } from '../../utils/findUser';
+import { deleteSale } from '../../utils/deleteSale';
+import { jsonEval } from '@firebase/util';
 
 const NavMenu = lazy(() => import("../../components/NavMenu"));
 const Loading = lazy(() => import("../../components/Loading"));
@@ -24,27 +23,28 @@ const SaleDetails = () => {
     
     const router = useRouter();
     const { id } = router.query;
-
+    
     const {signed} = useContext(AuthGoogleContext);
 
     useEffect(()=>{
         redirectLoginPage(window, signed, router);
-        reqSale(id);
-        sales.map((sale)=> reqUser(sale.sell));
+        const req = async () =>{
+            setSales(await findSale(id));
+        }
+        req();
+        reqUser();
     },[]);
 
-    const reqSale = async (saleId) => {
-        setSales(await fetchSaleDetails(saleId));
+    // const reqSale = async (id) => {
+    //     setSales(await findSale(id));
+    // }
+
+    const reqUser = async() => {
+        const localUser = jsonEval(localStorage.getItem("@AuthFirebase:user"));
+        const email = localUser.email
+        setUsers(await findUser(email));
     }
 
-    const del = (saleId) => {
-        deleteDataSale(saleId);
-        router.replace("/sales");
-    }
-
-    const reqUser = async (userId) =>{
-        setUsers(await fetchDataUser(userId));
-    }
     if(signed){
         return(
             <>
@@ -72,13 +72,13 @@ const SaleDetails = () => {
                                             <p className='text-2xl font-light pt-2'>{sale.product}</p>
                                         </div>
                                         <div className='flex flex-col justify-center items-center'>
-                                            {sale.status == 'approved' ? <AiOutlineCheckCircle size={40} color={'green'}/> : <MdOutlineCancelPresentation size={40} color={'red'}/>}
+                                            {sale.status ? <AiOutlineCheckCircle size={40} color={'green'}/> : <MdOutlineCancelPresentation size={40} color={'red'}/>}
                                             <p className='text-2xl font-light pt-2'>{sale.status}</p>
                                         </div>  
                                     </div>
                                     <div className='flex justify-around'>
                                         <button className='w-[5em] md:w-[10em] p-3 bg-yellow-500 rounded-xl text-xl font-bold'>Edit</button>
-                                        <button className='w-[5em] md:w-[10em] p-3 bg-yellow-500 rounded-xl text-xl font-bold' onClick={() => del(sale._id)}>Delete</button>  
+                                        <button className='w-[5em] md:w-[10em] p-3 bg-yellow-500 rounded-xl text-xl font-bold' onClick={() => deleteSale(sale._id)}>Delete</button>  
                                     </div>
                                 </div>
                             </div>

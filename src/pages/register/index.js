@@ -1,14 +1,11 @@
 import { createUser } from "../../mutations/createUserMutation";
 import { useForm } from "react-hook-form";
-import { registerUser } from "../../services/register";
 import { AiOutlineWarning } from 'react-icons/ai';
 import { useState } from "react";
 import Link from "next/link";
-import { fetchDataExistUser } from "../../utils/verifyExistsUser";
 import Router from "next/router";
 import { FcGoogle } from "react-icons/fc";
-import { registerInGoogle } from "../../utils/registerGoogle";
-
+import { createUserFirebase } from "../../utils/createUserFirebase";
 
 const Register = () => {
 
@@ -16,37 +13,19 @@ const Register = () => {
     const [showModal, setShowModal] = useState(false);
     const [sucess, setSucess] = useState(false);
 
-    const req = async ({email}) => {
-        //console.log(email);
-        return await fetchDataExistUser(email);
-    }   
-
     const registerGoogle =  async () => {
-        const data = await registerInGoogle();
-        const userExists =  await req(data);
-        if(userExists.length == 0){
-            const result = registerUser(createUser(data));
-            if(result){
-                setSucess(true);
-            }
-        }else{
-            setSucess(false);
+        const result = await createUserFirebase();
+        if(result){
+            setSucess(true);
         }
-
         setShowModal(true);
 
     }
 
     const onSubmit = async (data) => {
-        const userExists = await req(data);
-        // console.log(userExists);
-        if(!userExists){
-            const r = registerUser(createUser(data));
-            if(r){
-                setSucess(true);
-            }
-        }else{
-            setSucess(false);
+        const result = await createUser(data);
+        if(result){
+            setSucess(true);
         }
         setShowModal(true);
     };

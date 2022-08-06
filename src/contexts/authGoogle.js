@@ -1,8 +1,8 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { app } from '../services/fireBaseConfig';
-import { fetchDataExistUser } from '../utils/verifyExistsUser';
 import Router from 'next/router';
+import { findUser } from '../utils/findUser';
 
 
 const AuthGoogleContext = createContext({});
@@ -15,7 +15,7 @@ const AuthGoogleProvider = ({children}) => {
     const auth = getAuth(app);
     
     const verifyExistsUser = async (email) => {
-        return await fetchDataExistUser(email);
+        return await findUser(email);
     }   
 
     useEffect(() => {
@@ -44,9 +44,7 @@ const AuthGoogleProvider = ({children}) => {
                 // The signed-in user info.
                 const user = result.user;
                 const r = await verifyExistsUser(user.email);
-                console.log(r);
                 if(r.length != 0){
-                    setUser(user);
                     localStorage.setItem("@AuthFirebase:token", token);
                     localStorage.setItem("@AuthFirebase:user", JSON.stringify(user));
                     Router.push('/dashboard');

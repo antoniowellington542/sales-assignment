@@ -1,12 +1,11 @@
 import Link from "next/link";
 import { useContext, useEffect, useState, Suspense, lazy } from "react";
 import Card from "../../components/Card";
-import { fetchDataSales } from "../../utils/sales";
 import {AiOutlineSearch} from 'react-icons/ai';
 import { AuthGoogleContext } from "../../contexts/authGoogle";
 import { useRouter } from "next/router";
-import { fetchDataExistUser } from "../../utils/verifyExistsUser";
-import { jsonEval } from "@firebase/util";
+import { listSales } from "../../utils/listSales";
+import { redirectLoginPage } from "../../utils/redirectLoginPage";
 
 const  NavMenu = lazy(() => import("../../components/NavMenu"));
 const Loading = lazy(() => import("../../components/Loading"));
@@ -16,28 +15,14 @@ const Sale = () => {
     const [sales, setSales] = useState([]);
     const { signed } = useContext(AuthGoogleContext);
     const router = useRouter();
-
+    
     useEffect(()=>{
+        redirectLoginPage(window, signed, router);
+        const req = async () =>{
+            setSales(await listSales());
+        }
         req();
     },[]);
-
-    const reqUser = async (email) => {
-        return await fetchDataExistUser(email);
-    }  
-
-    const req = async () => {
-        const localUser = jsonEval(localStorage.getItem("@AuthFirebase:user"));
-        const email = localUser.email
-        const user = await reqUser(email);
-        const id = user[0]._id;
-        setSales(await fetchDataSales(id));
-    }
-
-    if(typeof window !== "undefined"){
-        if(!signed){
-            router.replace("/");
-        }
-    }
     
     if(signed){
         return  (

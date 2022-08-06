@@ -37,7 +37,7 @@ export default {
         {
             title: 'Status',
             name: 'status',
-            type: 'string',
+            type: 'boolean',
         },
         {
             title: 'Comission',

@@ -1,8 +1,13 @@
 export default {
-    name: 'user',
+    name: 'userFirebase',
     type: 'document',
-    title: 'User',
+    title: 'UserFirebase',
     fields: [
+        {
+            title: 'AuthUseId',
+            name: 'authUserId',
+            type: 'string',
+        },
         {
             title: 'Name',
             name: 'name',
@@ -12,12 +17,6 @@ export default {
         {
             title: 'Email',
             name: 'email',
-            type: 'string',
-            validation: Rule => Rule.required()
-        },
-        {
-            title: 'Password',
-            name: 'password',
             type: 'string',
             validation: Rule => Rule.required()
         },

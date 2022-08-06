@@ -3,27 +3,20 @@ import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form"
 import { AiOutlineWarning } from "react-icons/ai";
-import { createSaleMutation } from "../../mutations/createSaleMutation";
-import { registerSale } from "../../services/registerSale";
-import { fetchDataExistUser } from "../../utils/verifyExistsUser";
-
+import { createSale } from "../../utils/createSale";
+import { findUser } from "../../utils/findUser";
+import Router from 'next/router';
 
 const CreateSale = () => {
 
-    const { register, handleSubmit, formState: { errors }} = useForm();
+    const { register, handleSubmit, formState: { errors }, getValues} = useForm();
     const [showModal, setShowModal] = useState(false);
     const [sucess, setSucess] = useState(false);
 
-    const req = async (email) => {
-        return await fetchDataExistUser(email);
-    }   
-
     const onSubmit = async (data) => {
         const localUser = jsonEval(localStorage.getItem("@AuthFirebase:user"));
-        //console.log(localUser.email);
         const email = localUser.email
-        const user = await req(email);
-        //console.log(user[0]._id);
+        const user = await findUser(email);
         const dataSale = [];
 
         Object.assign(dataSale, {
@@ -33,8 +26,7 @@ const CreateSale = () => {
             _id: user[0]._id
         })
 
-        console.log(dataSale);
-        const result = registerSale(createSaleMutation(dataSale));
+        const result = createSale(dataSale);
         result ? setSucess(true) : setSucess(false);
         setShowModal(true);
 
@@ -62,7 +54,7 @@ const CreateSale = () => {
                     <div className="flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b">
                     {sucess ? 
                         (
-                            <Link href="/sales">
+                            <Link href="/sales" >
                                 <button
                                     className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                     type="button"
@@ -72,7 +64,7 @@ const CreateSale = () => {
                                 </button>
                             </Link>
                         ) : 
-                        (<Link href="/create-sale" >
+                        (
                             <button
                                 className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                 type="button"
@@ -80,7 +72,7 @@ const CreateSale = () => {
                             >
                                 Fechar
                             </button>
-                        </Link>)}
+                        )}
                     </div>
                 </div>
                 </div>
@@ -112,12 +104,12 @@ const CreateSale = () => {
                                         {errors.product && (<div className="flex pt-2"><AiOutlineWarning size={24} color="red"/><p className="pl-2">This field is required</p></div>)}
                                         <div className="flex flex-col">
                                             <label className="leading-loose">Value</label>
-                                            <input {...register("value", { required: true})} type="number" className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" placeholder="Value"/>
+                                            <input {...register("value", { required: true})} type="number" min="0" className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" placeholder="Value"/>
                                         </div>
                                         {errors.value && (<div className="flex pt-2"><AiOutlineWarning size={24} color="red"/><p className="pl-2">This field is required</p></div>)}
                                     </div>
                                     <div className="pt-4 flex items-center space-x-4">
-                                        <button className="flex justify-center items-center w-full text-gray-900 px-4 py-3 rounded-md focus:outline-none">
+                                        <button className="flex justify-center items-center w-full text-gray-900 px-4 py-3 rounded-md focus:outline-none" onClick={()=>Router.replace('/sales')}>
                                             <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg> Cancel
                                         </button>
                                         <button className="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none">Create</button>
