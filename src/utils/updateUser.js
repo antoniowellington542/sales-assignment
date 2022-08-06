@@ -1,14 +1,13 @@
 import { client } from "./client";
 
-export async function updateSale(data){
-    
-    const {_id, value, client_name, product} = data;
+export async function updateUser(data){
 
+    const { _id, name, role } = data;
+    
     const result = await client.patch(_id)
                             .set({
-                                client_name,
-                                product,
-                                value,
+                                name,
+                                role,
                             })
                             .commit()
                             .then(console.log("sucess"))
