@@ -31,7 +31,7 @@ export default {
         {
             title: 'Date',
             name: 'date',
-            type: 'datetime',
+            type: 'date',
             validation: Rule => Rule.required()
         },
         {

@@ -3,7 +3,7 @@ import { client } from "./client";
 
 export async function findUser(email){
     const user = await client.fetch(findUserMutation(email))
-                                 .then(console.log("user"))
+                                 .then((result) => {return result})
                                  .catch(console.error)
     return user;
 }

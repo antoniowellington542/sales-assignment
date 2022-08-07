@@ -82,7 +82,7 @@ const SaleDetails = () => {
                                     <div className='flex justify-around'>
                                         {role == "admin" ? 
                                             (
-                                                <button className={`w-[5em] md:w-[10em] mt-3 p-3 ${sale.status ? "bg-gray-500 cursor-not-allowed" : "bg-green-500 cursor-pointer"} rounded-xl text-white uppercase text-xl font-bold`} disabled={sale.status ? true: false} onClick={()=> approvedSale(sale._id, sale.date)}>To approve</button>
+                                                <button className={`w-[5em] md:w-[10em] mt-3 p-3 ${sale.status ? "bg-gray-500 cursor-not-allowed" : "bg-green-500 cursor-pointer"} rounded-xl text-white uppercase text-xl font-bold`} disabled={sale.status ? true: false} onClick={()=> approvedSale(sale)}>To approve</button>
                                             ):
                                             (
                                                 <>

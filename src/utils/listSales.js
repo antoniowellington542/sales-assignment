@@ -9,7 +9,7 @@ export async function listSales(){
     const user = await findUser(email);
     const _id = user[0]._id;
     const sales = await client.fetch(listSalesMutation(_id))
-                            .then(console.log("sucess"))
+                            .then((result) => {return result})
                             .catch(console.error)
     return sales;
 };

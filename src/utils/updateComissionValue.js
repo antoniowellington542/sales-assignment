@@ -1,6 +1,6 @@
 import { client } from "./client";
 
-export async function updateSale(data){
+export async function updateComissionValue(data){
     
     const {_id, client_name, product} = data;
 
@@ -16,3 +16,7 @@ export async function updateSale(data){
                             })
     return result;
 };
+
+export const valueWithComission =  (a, b, c, d) => {
+    return a + b + c + d;
+}

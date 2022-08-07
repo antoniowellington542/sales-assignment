@@ -15,29 +15,28 @@ const Sale = () => {
 
     const [sales, setSales] = useState([]);
     const { signed } = useContext(AuthGoogleContext);
-    const role = localStorage.getItem("@AuthFirebase:role");
+    const [role, setRole] = useState();
     const router = useRouter();
     
 
-    if(role != "noRole"){
-        useEffect(()=>{
-            
-            redirectLoginPage(window, signed, router);
-    
-            if(role == "admin"){
-                const req = async () =>{
-                    setSales(await listAllSales());
-                }
-                req();
-            }else{
-                const req = async () =>{
-                    setSales(await listSales());
-                }
-                req();
-            }  
-            console.log(sales);
-        },[]);
+    useEffect(()=>{setRole(localStorage.getItem("@AuthFirebase:role"))},[]);
+
+    const salesByAdmin = async () =>{
+        setSales(await listAllSales());
     }
+
+    const salesByUser = async () =>{
+        setSales(await listSales());
+    }
+
+    useEffect(()=>{
+        redirectLoginPage(window, signed, router);
+        console.log(role);
+        if(role != "noRole"){
+            role == "admin" ? salesByAdmin() : salesByUser();
+            console.log(sales);
+        }
+    },[]);
     
     
     if(signed){

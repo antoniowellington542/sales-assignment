@@ -1,19 +1,13 @@
 import { client } from "./client";
 import Router from 'next/router';
+import { comission } from "./comission";
+// import { CalcComission } from "./calcComission";
 
-export function approvedSale(_id, date){
+export async function approvedSale(sale){
     
+    const {value, _id} = sale;
 
-    console.log(date);
-
-    const comission = () => {
-        if(value <= 400){
-            return value*(0.1);
-        }else if(value > 400 && value <= 800){
-            return value*(0.2);
-        }
-    }
-
+    await comission(value);
     // await client.patch(_id)
     //             .set({
     //                 status: true

@@ -8,7 +8,7 @@ export const createSaleMutation = (client_name, product, value, _id)=> {
         product: product,
         value: value,
         status: false,
-        date: Moment().format('YYYY-MM-DD h:mm')
+        date: Moment().format('YYYY-MM-DD')
     }
 
     return query;
