@@ -5,6 +5,7 @@ export const findSaleMutation = (id) =>{
         product,
         value,
         status,
+        comission,
         date,
         "sellerId": seller._ref,
     }`;

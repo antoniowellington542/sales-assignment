@@ -3,8 +3,6 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { app } from '../services/fireBaseConfig';
 import Router from 'next/router';
 import { findUser } from '../utils/findUser';
-import { jsonEval } from "@firebase/util";
-
 
 const AuthGoogleContext = createContext({});
 
@@ -41,7 +39,7 @@ const AuthGoogleProvider = ({children}) => {
                     localStorage.setItem("@AuthFirebase:token", credential.accessToken);
                     localStorage.setItem("@AuthFirebase:user", JSON.stringify(user));
                     localStorage.setItem("@AuthFirebase:role", userExists[0].role);
-                    Router.push('/dashboard');
+                    Router.replace('/dashboard');
                 }
             // ...
             }).catch((error) => {

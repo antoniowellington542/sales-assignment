@@ -1,13 +1,16 @@
 import { AuthGoogleProvider } from '../contexts/authGoogle';
 import '../../styles/globals.css';
 import '../../styles/loading.css';
+import { BonusOfMonthProvider } from '../contexts/bonus';
 
 function MyApp({ Component, pageProps }) {
   
   return (
     
     <AuthGoogleProvider>
-        <Component {...pageProps} />
+        <BonusOfMonthProvider>
+          <Component {...pageProps} />
+        </BonusOfMonthProvider>
     </AuthGoogleProvider>
   )
 }

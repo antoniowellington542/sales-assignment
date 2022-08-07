@@ -7,6 +7,7 @@ export const createSaleMutation = (client_name, product, value, _id)=> {
         seller: {_ref: _id},
         product: product,
         value: value,
+        comission: 0,
         status: false,
         date: Moment().format('YYYY-MM-DD')
     }

@@ -13,6 +13,7 @@ import { findUser } from '../../utils/findUser';
 import { deleteSale } from '../../utils/deleteSale';
 import { jsonEval } from '@firebase/util';
 import { approvedSale } from '../../utils/aprovedSale';
+import { BonusOfMonthContext } from '../../contexts/bonus';
 
 const NavMenu = lazy(() => import("../../components/NavMenu"));
 const Loading = lazy(() => import("../../components/Loading"));
@@ -26,6 +27,7 @@ const SaleDetails = () => {
     const { id } = router.query;
     
     const {signed} = useContext(AuthGoogleContext);
+    const {bonusAchieved, setBonusAchieved} = useContext(BonusOfMonthContext);
 
     useEffect(()=>{
         setRole(localStorage.getItem("@AuthFirebase:role"));
@@ -35,7 +37,7 @@ const SaleDetails = () => {
         }
         req();
         reqUser();
-    },[]);
+    },[id]);
 
     const reqUser = async() => {
         const localUser = jsonEval(localStorage.getItem("@AuthFirebase:user"));
@@ -76,13 +78,13 @@ const SaleDetails = () => {
                                         <div className='flex flex-col justify-center items-center'>
                                             {sale.status ? (<GiReceiveMoney size={40} color={'green'}/>) : <MdOutlineCancelPresentation size={40} color={'red'}/>}
                                             <h2 className='pt-0 text-xl font-bold'>Commission</h2>
-                                            <p className='pt-4 text-2xl font-light text-center'>{sale.status ? sale.commision+" R$" : "Waiting for approval"}</p>
+                                            <p className='pt-4 text-2xl font-light text-center'>{sale.status ? sale.comission +" R$" : "Waiting for approval"}</p>
                                         </div>  
                                     </div>
                                     <div className='flex justify-around'>
                                         {role == "admin" ? 
                                             (
-                                                <button className={`w-[5em] md:w-[10em] mt-3 p-3 ${sale.status ? "bg-gray-500 cursor-not-allowed" : "bg-green-500 cursor-pointer"} rounded-xl text-white uppercase text-xl font-bold`} disabled={sale.status ? true: false} onClick={()=> approvedSale(sale)}>To approve</button>
+                                                <button className={`w-[5em] md:w-[10em] mt-3 p-3 ${sale.status ? "bg-gray-500 cursor-not-allowed" : "bg-green-500 cursor-pointer"} rounded-xl text-white uppercase text-xl font-bold`} disabled={sale.status ? true: false} onClick={()=> {approvedSale(sale, bonusAchieved, setBonusAchieved)}}>To approve</button>
                                             ):
                                             (
                                                 <>

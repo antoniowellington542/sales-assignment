@@ -3,6 +3,8 @@ export const listAllSalesMutation = () => {
         _id,
         client_name,
         product,
+        comission,
+        date
     }`;
 
     return query;
