@@ -14,6 +14,7 @@ import { deleteSale } from '../../utils/deleteSale';
 import { jsonEval } from '@firebase/util';
 import { approvedSale } from '../../utils/aprovedSale';
 import { BonusOfMonthContext } from '../../contexts/bonus';
+import Link from 'next/link';
 
 const NavMenu = lazy(() => import("../../components/NavMenu"));
 const Loading = lazy(() => import("../../components/Loading"));
