@@ -15,12 +15,14 @@ const EditSale = () => {
     const [sucess, setSucess] = useState(false);
     const [sales, setSales] = useState([]);
     const {signed} = useContext(AuthGoogleContext);
-    const role = localStorage.getItem("@AuthFirebase:role");
+    const [role,setRole] = useState();
     const router = useRouter();
 
     const { id } = router.query;
 
     useEffect(()=>{
+
+        setRole(localStorage.getItem("@AuthFirebase:role"));
 
         if(window !== "undefined"){
             if(role == 'admin' || !signed){
@@ -103,7 +105,7 @@ const EditSale = () => {
         </>
       ) : null}
             {sales.map((sale)=>
-                <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+                <div key={sale._id} className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="w-full relative py-3 sm:max-w-xl sm:mx-auto">
                             <div className="relative px-4 py-10 bg-white mx-8 md:mx-0 shadow rounded-3xl sm:p-10">
@@ -130,7 +132,7 @@ const EditSale = () => {
                                         </div>
                                         <div className="pt-4 flex items-center space-x-4">
                                             <button className="flex justify-center items-center w-full text-gray-900 px-4 py-3 rounded-md focus:outline-none" onClick={()=>Router.replace('/sales')}>
-                                                <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg> Cancel
+                                                <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg> Cancel
                                             </button>
                                             <button className="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none">Create</button>
                                         </div>

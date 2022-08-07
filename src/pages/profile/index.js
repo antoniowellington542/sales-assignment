@@ -21,7 +21,7 @@ const Profile = () => {
         <>
             <NavMenu />
             {users.map((user)=>
-                <div className="p-16">
+                <div key={user._id} className="p-16">
                     <div className="p-4 md:p-8 bg-white shadow mt-24">
                         <div className="grid grid-cols-1 md:grid-cols-3">
                             <div className="grid grid-cols-1 md:grid-cols-2 text-center order-last md:order-first mt-20 md:mt-0">
