@@ -1,14 +1,22 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import NavMenu from "../../components/NavMenu";
 import { findUser } from "../../utils/findUser";
 import { jsonEval } from "@firebase/util";
 import Link from "next/link";
+import { AuthGoogleContext } from "../../contexts/authGoogle";
+import { useRouter } from "next/router";
 
 const Profile = () => {
 
     const [users, setUsers] = useState([]);
-       
+    const { signed } = useContext(AuthGoogleContext);
+    const router = useRouter();
+
     useEffect(()=>{
+        if(!signed){
+            router.replace('/login');
+        }
+        
         const req = async() => {
             const localUser = jsonEval(localStorage.getItem("@AuthFirebase:user"));
             const email = localUser.email;
@@ -17,7 +25,7 @@ const Profile = () => {
         req();
     }, [])
 
-    return(
+    return signed && (
         <>
             <NavMenu />
             {users.map((user)=>

@@ -24,7 +24,10 @@ const Sale = () => {
     
 
     useEffect(()=>{
-        redirectLoginPage(window, signed, router);
+
+        if(!signed){
+            router.replace('/login');
+        }
 
         const salesByAdmin = async () =>{
             setSales(await listAllSales());
@@ -61,7 +64,7 @@ const Sale = () => {
                             </Link>
                         </div>
                         {role == "noRole" ? <p className="text-white font-bold text-2xl text-center pt-4">To create or view sales edit your role in profile option</p>:
-                            <div className="w-3/4 pt-12 min-h-screen grid md:grid-cols-5 gap-8 md:gap-8 justify-center items-center">
+                            <div className="w-3/4 pt-12 min-h-screen grid md:grid-cols-4 gap-8 justify-center">
                                 {
                                     sales.map((sale)=> 
                                         <Card 

@@ -1,17 +1,25 @@
 import { jsonEval } from "@firebase/util";
 import Link from "next/link";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form"
 import { AiOutlineWarning } from "react-icons/ai";
 import { createSale } from "../../utils/createSale";
 import { findUser } from "../../utils/findUser";
 import Router from 'next/router';
+import { AuthGoogleContext } from "../../contexts/authGoogle";
 
 const CreateSale = () => {
 
     const { register, handleSubmit, formState: { errors }, getValues} = useForm();
     const [showModal, setShowModal] = useState(false);
     const [sucess, setSucess] = useState(false);
+    const {signed} = useContext(AuthGoogleContext);
+    
+    useEffect(()=>{
+        if(!signed){
+            Router.replace("/login");
+        }
+    })
 
     const onSubmit = async (data) => {
         const localUser = jsonEval(localStorage.getItem("@AuthFirebase:user"));

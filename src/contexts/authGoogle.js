@@ -10,6 +10,7 @@ const AuthGoogleProvider = ({children}) => {
 
     const provider = new GoogleAuthProvider();
     const [user, setUser] = useState(null);
+    const [signed, setSigned] = useState(false);
     const auth = getAuth(app);
     
     useEffect(() => {
@@ -25,8 +26,9 @@ const AuthGoogleProvider = ({children}) => {
     }, []);
 
     const logout = ()=>{
+        setSigned(false);
         localStorage.clear();
-        Router.push("/login");
+        Router.replace('/login');
     }
 
     const signInGoogle = () => {
@@ -35,10 +37,12 @@ const AuthGoogleProvider = ({children}) => {
                 const credential = GoogleAuthProvider.credentialFromResult(result);
                 const user = result.user;
                 const userExists = await findUser(user.email);
+                console.log(userExists);
                 if(userExists.length != 0){
                     localStorage.setItem("@AuthFirebase:token", credential.accessToken);
                     localStorage.setItem("@AuthFirebase:user", JSON.stringify(user));
                     localStorage.setItem("@AuthFirebase:role", userExists[0].role);
+                    setSigned(true);
                     Router.replace('/dashboard');
                 }
             // ...
@@ -46,12 +50,12 @@ const AuthGoogleProvider = ({children}) => {
                 // 
                 console.log(error);
             });
-
+        
     }
 
     return (
         <AuthGoogleContext.Provider 
-            value={{signInGoogle, signed: !!user, logout}}
+            value={{signInGoogle, signed, setSigned, logout}}
         >
             {children}
         </AuthGoogleContext.Provider>

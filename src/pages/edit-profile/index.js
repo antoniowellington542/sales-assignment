@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form"
 import Router from 'next/router';
 import { useEffect } from "react";
@@ -7,6 +7,7 @@ import { findUser } from "../../utils/findUser";
 import NavMenu from "../../components/NavMenu";
 import { jsonEval } from "@firebase/util";
 import { updateUser } from "../../utils/updateUser";
+import { AuthGoogleContext } from "../../contexts/authGoogle";
 
 const EditProfile = () => {
 
@@ -14,14 +15,20 @@ const EditProfile = () => {
     const [showModal, setShowModal] = useState(false);
     const [sucess, setSucess] = useState(false);
     const [users, setUsers] = useState([]);
-    
+    const {signed} = useContext(AuthGoogleContext);
+
     useEffect(()=>{
-        const req = async() => {
-            const localUser = jsonEval(localStorage.getItem("@AuthFirebase:user"));
-            const email = localUser.email;
-            setUsers(await findUser(email));
+
+        if(!signed){
+            Router.replace("/login")
+        }else{
+            const req = async() => {
+                const localUser = jsonEval(localStorage.getItem("@AuthFirebase:user"));
+                const email = localUser.email;
+                setUsers(await findUser(email));
+            }
+            req();
         }
-        req();
     },[]);
 
     const onSubmit = async (data) => {
@@ -45,7 +52,7 @@ const EditProfile = () => {
 
     };
 
-    return(
+    return signed && (
         <>
         <NavMenu />
         {showModal ? (

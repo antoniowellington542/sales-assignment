@@ -22,13 +22,15 @@ const EditSale = () => {
 
     useEffect(()=>{
 
-        setRole(localStorage.getItem("@AuthFirebase:role"));
-
-        if(window !== "undefined"){
-            if(role == 'admin' || !signed){
-                router.replace("/dashboard");
-            }
+        if(!signed){
+            router.replace('/login');
         }
+
+        if(role == "admin"){
+            router.replace("/sales");
+        }
+
+        setRole(localStorage.getItem("@AuthFirebase:role"));
 
         const req = async () =>{
             setSales(await findSale(id));
@@ -56,7 +58,7 @@ const EditSale = () => {
 
     };
 
-    return(
+    return signed && (
         <>
         {showModal ? (
             <>
@@ -82,20 +84,22 @@ const EditSale = () => {
                                 <button
                                     className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                     type="button"
-                                    onClick={() => {setShowModal(false);router.reload("/sales")}}
+                                    onClick={() => {setShowModal(false);}}
                                 >
                                     Ir para Sales
                                 </button>
                             </Link>
                         ) : 
                         (
-                            <button
-                                className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                type="button"
-                                onClick={() => {setShowModal(false);Router.reload(window.location.pathname)}}
-                            >
-                                Fechar
-                            </button>
+                            <Link href={`/edit-sale/${id}`}>
+                                <button
+                                    className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                    type="button"
+                                    onClick={() => {setShowModal(false)}}
+                                >
+                                    Fechar
+                                </button>
+                            </Link>
                         )}
                     </div>
                 </div>
@@ -131,10 +135,12 @@ const EditSale = () => {
                                             </div>
                                         </div>
                                         <div className="pt-4 flex items-center space-x-4">
-                                            <button className="flex justify-center items-center w-full text-gray-900 px-4 py-3 rounded-md focus:outline-none" onClick={()=>Router.replace('/sales')}>
-                                                <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg> Cancel
-                                            </button>
-                                            <button className="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none">Create</button>
+                                            <Link href="/sales">
+                                                <button className="flex justify-center items-center w-full text-gray-900 px-4 py-3 rounded-md focus:outline-none">
+                                                    <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg> Cancel
+                                                </button>
+                                            </Link>
+                                            <button className="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none">Edit</button>
                                         </div>
                                     </div>
                                 </div>

@@ -30,8 +30,12 @@ const SaleDetails = () => {
     const {bonusAchieved, setBonusAchieved} = useContext(BonusOfMonthContext);
 
     useEffect(()=>{
+
+        if(!signed){
+            router.replace('/login');
+        }
+
         setRole(localStorage.getItem("@AuthFirebase:role"));
-        redirectLoginPage(window, signed, router);
         const req = async () =>{
             setSales(await findSale(id));
         }
@@ -87,8 +91,10 @@ const SaleDetails = () => {
                                                 <button className={`w-[5em] md:w-[10em] mt-3 p-3 ${sale.status ? "bg-gray-500 cursor-not-allowed" : "bg-green-500 cursor-pointer"} rounded-xl text-white uppercase text-xl font-bold`} disabled={sale.status ? true: false} onClick={()=> {approvedSale(sale, bonusAchieved, setBonusAchieved)}}>To approve</button>
                                             ):
                                             (
-                                                <>
-                                                    <button className='w-[5em] md:w-[10em] p-3 bg-yellow-500 rounded-xl text-xl font-bold' onClick={()=>router.push(`/edit-sale/${id}`)}>Edit</button>
+                                                <>  
+                                                    <Link href={`/edit-sale/${id}`}>
+                                                        <button className='w-[5em] md:w-[10em] p-3 bg-yellow-500 rounded-xl text-xl font-bold'>Edit</button>
+                                                    </Link>
                                                     <button className='w-[5em] md:w-[10em] p-3 bg-yellow-500 rounded-xl text-xl font-bold' onClick={() => deleteSale(sale._id)}>Delete</button>
                                                 </>
                                             ) 
