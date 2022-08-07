@@ -95,7 +95,7 @@ const EditProfile = () => {
         </>
       ) : null}
             {users.map((user)=>
-                <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+                <div key={user._id} className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="w-full relative py-3 sm:max-w-xl sm:mx-auto">
                             <div className="relative px-4 py-10 bg-white mx-8 md:mx-0 shadow rounded-3xl sm:p-10">
